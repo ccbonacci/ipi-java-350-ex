@@ -36,7 +36,18 @@ public class EmployeTest {
         Integer anneeAnciennete = employe.getNombreAnneeAnciennete();
 
         // Then : Vérifications de ce qu'à fait la méthode
-        Assertions.assertThat(anneeAnciennete).isNull();
+        Assertions.assertThat(anneeAnciennete).isGreaterThanOrEqualTo(6);
+    }
+
+    @Test
+    public void testGetNbAnneeAncienneteDateEmbaucheNull() {
+        //Given
+        Employe employe = new Employe();
+        employe.setDateEmbauche(null);
+        //When
+        Integer nbAnneeAnciennete = employe.getNombreAnneeAnciennete();
+        //Then
+        Assertions.assertThat(nbAnneeAnciennete).isNull();
     }
 
     @Test
