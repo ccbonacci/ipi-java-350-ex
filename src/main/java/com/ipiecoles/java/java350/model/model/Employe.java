@@ -96,7 +96,7 @@ public class Employe {
      *
      * @return la prime annuelle de l'employé en Euros et cents
      */
-    //Matricule, performance, date d'embauche, temps partiel, prime
+    // Matricule, performance, date d'embauche, temps partiel, prime
     public Double getPrimeAnnuelle(){
 
         //Calcule de la prime d'ancienneté
