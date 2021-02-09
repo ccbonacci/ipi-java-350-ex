@@ -129,4 +129,19 @@ public class EmployeTest {
         Assertions.assertThat(prime).isEqualTo(primeAttendue);
     }
 
+    // Test de CAS LIMITE
+    @Test
+    public void testGetPrimeAnnuelleMatriculeNull(){
+        // Given
+
+        Employe employe = new Employe("Doe", "John", null,
+                LocalDate.now(), 1500d, 1, 1.0);
+
+        // When
+        Double prime = employe.getPrimeAnnuelle();
+
+        // Then
+        Assertions.assertThat(prime).isEqualTo(1000);
+    }
+
 }
