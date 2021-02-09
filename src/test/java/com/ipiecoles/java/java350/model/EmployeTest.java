@@ -26,6 +26,7 @@ public class EmployeTest {
         Assertions.assertThat(anneeAnciennete).isEqualTo(6);
     }
 
+
     @Test
     public void testGetNbAnneeAncienneteDateEmbaucheSupNow(){
 
@@ -40,6 +41,7 @@ public class EmployeTest {
         Assertions.assertThat(anneeAnciennete).isGreaterThanOrEqualTo(6);
     }
 
+
     @Test
     public void testGetNbAnneeAncienneteDateEmbaucheNull() {
         //Given
@@ -51,6 +53,7 @@ public class EmployeTest {
         Assertions.assertThat(nbAnneeAnciennete).isNull();
     }
 
+
     @Test
     public void testGetNbAnneeAncienneteDateEmbaucheNow(){
         //Given
@@ -61,7 +64,6 @@ public class EmployeTest {
         //Then
         Assertions.assertThat(anneeAnciennete).isEqualTo(0);
     }
-
 
 
     // Tests primeAnnuelle
@@ -76,6 +78,7 @@ public class EmployeTest {
         Assertions.assertThat(salaire).isEqualTo(1500);
     }
 
+
     @Test
     public void testPrimeAnnuelleManagerAnneeEmbaucheMinusOne(){
         // Given
@@ -86,6 +89,7 @@ public class EmployeTest {
         // Then
         Assertions.assertThat(salaire).isEqualTo(1500);
     }
+
 
     // TEST GET PRIME ANNUELLE
     @Test void testGetPrimeAnnuelle(){
@@ -117,8 +121,6 @@ public class EmployeTest {
             "2, 'T12345', 1.0, 1, 2400.0",
             "1, 'M12345', 1.0, 0, 1700.0",
             "1, 'M12345', 1.0, 3, 2000.0"
-
-
     })
     public void testGetPrimeAnnuelle(Integer performance, String matricule, Double tauxActivite, Long nbAnneeAnciennete, Double primeAttendue){
         // Given
@@ -137,7 +139,6 @@ public class EmployeTest {
     @Test
     public void testGetPrimeAnnuelleMatriculeNull(){
         // Given
-
         Employe employe = new Employe("Doe", "John", null,
                 LocalDate.now(), 1500d, 1, 1.0);
 
