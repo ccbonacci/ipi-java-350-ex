@@ -111,7 +111,6 @@ public class EmployeTest {
     }
 
     // un sénario TEST PARAMETRé GET PRIME ANNUELLE
-
     @ParameterizedTest(name = "Perf {0}, matricule {1}, txActivite {2}, anciennete {3} => prime {4}")
     @CsvSource({
             "1, 'T12345', 1.0, 0, 1000.0",
@@ -122,6 +121,8 @@ public class EmployeTest {
             "1, 'M12345', 1.0, 0, 1700.0",
             "1, 'M12345', 1.0, 3, 2000.0"
     })
+
+
     public void testGetPrimeAnnuelle(Integer performance, String matricule, Double tauxActivite, Long nbAnneeAnciennete, Double primeAttendue){
         // Given
 
@@ -134,6 +135,7 @@ public class EmployeTest {
         // Then
         Assertions.assertThat(prime).isEqualTo(primeAttendue);
     }
+
 
     // Test de CAS LIMITE en test simple
     @Test
