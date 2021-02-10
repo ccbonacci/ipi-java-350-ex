@@ -63,30 +63,53 @@ public class Employe {
     }
 
     /**
+     * Permettant de calculer le nombre de jours de rtt selon la formule : 
+     * Nb Jour RTT = 
+     * Nombre de jours dans l'année 
+     * - Nombre de jours travaillés dans l'année en plein temps 
+     * - Nombre de samedi et dimanche dans l'année 
+     * - Nombre de jours fériés ne tombant pas le week-end 
+     * - Nombre de congés payés
+     * 
+     * @param dateReference c'est la date à laquelle on va calculer le nombre de RTT pour l'année
      *
-     * @param d
-     * @return
+     * @return nombre de jour de rtt pour l'employe, l'année de référence au prorata temporis de l'activité
+     *
+     * Appliquer les scénarios du readMe.md
+     *
      */
-    public Integer getNbRtt(LocalDate d){
-        int i1 = d.isLeapYear() ? 365 : 366;int var = 104;
-        switch (LocalDate.of(d.getYear(),1,1).getDayOfWeek()){
+    public Integer getNbRtt(LocalDate dateReference) {
+        int nbJoursAnnee = dateReference.isLeapYear() ? 366 : 365;
+        int nbSamediDimanche = 104;
+
+        // Détermine le nombre de samedi et de dimanche de l'année, en fonction du premier jour de l'année
+        switch (LocalDate.of(dateReference.getYear(), 1, 1).getDayOfWeek()) {
             case THURSDAY:
-                if(d.isLeapYear())
-                    var =  var + 1;
-                    break;
+                if (dateReference.isLeapYear()){
+                    nbSamediDimanche = nbSamediDimanche + 1;
+                }
+                break;
             case FRIDAY:
-                if(d.isLeapYear())
-                    var =  var + 2;
+                if (dateReference.isLeapYear()){
+                    nbSamediDimanche = nbSamediDimanche + 2;
+                }
                 else
-                    var =  var + 1;
-                    break;
+                {
+                    nbSamediDimanche = nbSamediDimanche + 1;
+                }
+                break;
             case SATURDAY:
-                var = var + 1;
+                nbSamediDimanche = nbSamediDimanche + 1;
                 break;
         }
-        int monInt = (int) Entreprise.joursFeries(d).stream().filter(localDate ->
+        int nbJoursFeriesSemaine = (int) Entreprise.joursFeries(dateReference).stream().filter(localDate ->
                 localDate.getDayOfWeek().getValue() <= DayOfWeek.FRIDAY.getValue()).count();
-        return (int) Math.ceil((i1 - Entreprise.NB_JOURS_MAX_FORFAIT - var - Entreprise.NB_CONGES_BASE - monInt) * tempsPartiel);
+        return (int) Math.ceil((nbJoursAnnee
+                - Entreprise.NB_JOURS_MAX_FORFAIT
+                - nbSamediDimanche
+                - Entreprise.NB_CONGES_BASE
+                - nbJoursFeriesSemaine
+        ) * tempsPartiel);
     }
 
     /**
