@@ -1,6 +1,6 @@
-package com.ipiecoles.java.java350.model.repository;
+package com.ipiecoles.java.java350.repository;
 
-import com.ipiecoles.java.java350.model.model.Employe;
+import com.ipiecoles.java.java350.model.Employe;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -78,10 +78,14 @@ class EmployeRepositoryTest {
     }
 
 
+
+    // sujet tp
 //    @Test
 //    public void testAvgPerformanceWhereMatriculeStartsWith() {
 //        // Given
 //        // When
 //        // Then
 //    }
+
+
 }

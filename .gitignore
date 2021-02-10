@@ -27,3 +27,5 @@ HELP.md
 
 mvnw*
 .mvn
+
+src/test/resources/application.properties

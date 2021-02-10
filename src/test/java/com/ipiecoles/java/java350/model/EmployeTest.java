@@ -1,7 +1,7 @@
 package com.ipiecoles.java.java350.model;
 
 import java.time.LocalDate;
-import com.ipiecoles.java.java350.model.model.Employe;
+
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
