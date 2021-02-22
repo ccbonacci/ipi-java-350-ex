@@ -44,12 +44,12 @@ public class EmployeTest {
 
     @Test
     public void testGetNbAnneeAncienneteDateEmbaucheNull() {
-        //Given
+        //Given : initialisation des données d'entrée
         Employe employe = new Employe();
         employe.setDateEmbauche(null);
-        //When
+        //When : Execution de la méthode à tester
         Integer nbAnneeAnciennete = employe.getNombreAnneeAnciennete();
-        //Then
+        //Then : Vérifications de ce qu'à fait la méthode
         Assertions.assertThat(nbAnneeAnciennete).isNull();
     }
 
@@ -151,6 +151,23 @@ public class EmployeTest {
         Assertions.assertThat(prime).isEqualTo(1000);
     }
 
-    // Test mutation testing
+    // Test augmenter le Salaire
+    // pourcentage
+    @Test
+    public void testAugmenterSalairePourcentage(){
+        // Given
+        Employe employe = new Employe("Doe", "John", null, LocalDate.now(), 1500d, 1, 1.0);
+        Double pourcentage = 0.2;
+
+        // When
+        Double salaire = employe.augmenterSalaire(pourcentage);
+
+        // Then
+        Assertions.assertThat(salaire).isEqualTo(1800);
+    }
+    // pourcentage
+
+
+
 
 }

@@ -30,11 +30,6 @@ public class EmployeServiceIntegrationTest {
     @Autowired
     private EmployeRepository employeRepository;
 
-    @BeforeEach
-    @AfterEach
-    public void setup(){
-        employeRepository.deleteAll();
-    }
 
     @Test
     public void testEmbauchePremierEmployeIntegration() throws EmployeException {

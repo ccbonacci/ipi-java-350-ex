@@ -39,15 +39,19 @@ class EmployeServiceTest {
         Mockito.when(employeRepository.findLastMatricule()).thenReturn(null);
 
         //Simuler que la recherche par matricule ne renvoie pas de résultats
-//        Mockito.when(employeRepository.findByMatricule(Mockito.anyString())).thenReturn(null);
+
         Mockito.when(employeRepository.findByMatricule("T00001")).thenReturn(null);
+        // Mockito.anyString() signifie que, peut importe la chaine de caractères qui sera passée lors de cet appel,
+        // tu retourneras toujours la valeur qui se trouve en paramètre de thenReturn(---)
+
+//        Mockito.when(employeRepository.findByMatricule(Mockito.anyString())).thenReturn(null);
 
 
-        //When
+        // When
         Employe employe = employeService.embaucheEmploye(nom, prenom, poste, niveauEtude, tempsPartiel);
 
 
-        //Then
+        // Then
 //        Employe employe = employeRepository.findByMatricule("T00001");
         Assertions.assertThat(employe).isNotNull();
         Assertions.assertThat(employe.getNom()).isEqualTo(nom);
