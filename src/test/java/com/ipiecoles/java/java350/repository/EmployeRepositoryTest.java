@@ -78,14 +78,4 @@ class EmployeRepositoryTest {
     }
 
 
-
-    // sujet tp
-//    @Test
-//    public void testAvgPerformanceWhereMatriculeStartsWith() {
-//        // Given
-//        // When
-//        // Then
-//    }
-
-
 }
