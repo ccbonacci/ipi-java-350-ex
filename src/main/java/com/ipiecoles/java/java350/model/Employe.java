@@ -62,31 +62,61 @@ public class Employe {
         return getNbRtt(LocalDate.now());
     }
 
-    public Integer getNbRtt(LocalDate d){
-        int i1 = d.isLeapYear() ? 365 : 366;int var = 104;
-        switch (LocalDate.of(d.getYear(),1,1).getDayOfWeek()){
+    /**
+     * Permettant de calculer le nombre de jours de rtt selon la formule : 
+     * Nb Jour RTT = 
+     * Nombre de jours dans l'année moins...
+     * ... - Nombre de jours travaillés dans l'année en plein temps
+     * ... - Nombre de samedi et dimanche dans l'année
+     * ... - Nombre de jours fériés ne tombant pas le week-end
+     * ... - Nombre de congés payés
+     * 
+     * @param dateReference c'est la date à laquelle on va calculer le nombre de RTT pour l'année
+     *
+     * @return nombre de jour de rtt pour l'employe,
+     * l'année de référence au prorata temporis de l'activité de cet employé
+     *
+     * Appliquer les scénarios du readMe.md
+     *
+     */
+    public Integer getNbRtt(LocalDate dateReference) {
+        int nbJoursAnnee = dateReference.isLeapYear() ? 366 : 365;
+        int nbSamediDimanche = 104;
+
+        // Détermine le nombre de jour à ajouter aux samedis et dimanches de l'année, en fonction du premier jour de l'année et si l'année est bissextile ou non
+        switch (LocalDate.of(dateReference.getYear(), 1, 1).getDayOfWeek()) {
             case THURSDAY:
-                if(d.isLeapYear())
-                    var =  var + 1;
-                    break;
+                if (dateReference.isLeapYear()){
+                    nbSamediDimanche = nbSamediDimanche + 1;
+                }
+                break;
             case FRIDAY:
-                if(d.isLeapYear())
-                    var =  var + 2;
+                if (dateReference.isLeapYear()){
+                    nbSamediDimanche = nbSamediDimanche + 2;
+                }
                 else
-                    var =  var + 1;
-                    break;
+                {
+                    nbSamediDimanche = nbSamediDimanche + 1;
+                }
+                break;
             case SATURDAY:
-                var = var + 1;
+                nbSamediDimanche = nbSamediDimanche + 1;
                 break;
         }
-        int monInt = (int) Entreprise.joursFeries(d).stream().filter(localDate ->
+        int nbJoursFeriesSemaine = (int) Entreprise.joursFeries(dateReference).stream().filter(localDate ->
                 localDate.getDayOfWeek().getValue() <= DayOfWeek.FRIDAY.getValue()).count();
-        return (int) Math.ceil((i1 - Entreprise.NB_JOURS_MAX_FORFAIT - var - Entreprise.NB_CONGES_BASE - monInt) * tempsPartiel);
+
+        return (int) Math.ceil((nbJoursAnnee
+                - Entreprise.NB_JOURS_MAX_FORFAIT
+                - nbSamediDimanche
+                - Entreprise.NB_CONGES_BASE
+                - nbJoursFeriesSemaine
+        ) * tempsPartiel);
     }
 
     /**
      * Calcul de la prime annuelle selon la règle :
-     * Pour les managers : Prime annuelle de base bonnifiée par l'indice prime manager
+     * Pour les managers : Prime annuelle de base bonifiée par l'indice prime manager
      * Pour les autres employés, la prime de base plus éventuellement la prime de performance calculée si l'employé
      * n'a pas la performance de base, en multipliant la prime de base par un l'indice de performance
      * (égal à la performance à laquelle on ajoute l'indice de prime de base)
@@ -104,7 +134,7 @@ public class Employe {
 
         Double prime;
         //Prime du manager (matricule commençant par M) : Prime annuelle de base multipliée par l'indice prime manager
-        //plus la prime d'anciennté.
+        //+ la prime d'anciennté.
         if(matricule != null && matricule.startsWith("M")) {
             prime = Entreprise.primeAnnuelleBase() * Entreprise.INDICE_PRIME_MANAGER + primeAnciennete;
         }
@@ -124,8 +154,15 @@ public class Employe {
         return prime * this.tempsPartiel;
     }
 
-    //Augmenter salaire
-    //public void augmenterSalaire(double pourcentage){}
+    /**
+     * Augmenter le salaire
+     * @save salaire augmenté
+     *  (entrée  un pourcentage,le salaire d'un salarié, puis calcul du salaire et sauvegarde du salaire augmenté
+     */
+    public Double augmenterSalaire(double pourcentage) {
+        return this.salaire = this.getSalaire() * (pourcentage + 1);
+    }
+
 
     public Long getId() {
         return id;

@@ -13,7 +13,7 @@ public class EmployeTest {
 
     // Méthode Fabrice
     @Test
-    public void testGetAnneeAncienneteDateEmbauche(){
+    void testGetAnneeAncienneteDateEmbauche(){
 
         // Given : initialisation des données d'entrée
         Employe employe = new Employe("Doe", "John", "T12345",
@@ -28,7 +28,7 @@ public class EmployeTest {
 
 
     @Test
-    public void testGetNbAnneeAncienneteDateEmbaucheSupNow(){
+    void testGetNbAnneeAncienneteDateEmbaucheSupNow(){
 
         // Given : initialisation des données d'entrée
         Employe employe = new Employe("Doe", "John", "T12345",
@@ -43,19 +43,19 @@ public class EmployeTest {
 
 
     @Test
-    public void testGetNbAnneeAncienneteDateEmbaucheNull() {
-        //Given
+    void testGetNbAnneeAncienneteDateEmbaucheNull() {
+        //Given : initialisation des données d'entrée
         Employe employe = new Employe();
         employe.setDateEmbauche(null);
-        //When
+        //When : Execution de la méthode à tester
         Integer nbAnneeAnciennete = employe.getNombreAnneeAnciennete();
-        //Then
+        //Then : Vérifications de ce qu'à fait la méthode
         Assertions.assertThat(nbAnneeAnciennete).isNull();
     }
 
 
     @Test
-    public void testGetNbAnneeAncienneteDateEmbaucheNow(){
+    void testGetNbAnneeAncienneteDateEmbaucheNow(){
         //Given
         Employe employe = new Employe("Doe", "John", "T12345",
                 LocalDate.now(), 1500d, 1, 1.0);
@@ -68,7 +68,7 @@ public class EmployeTest {
 
     // Tests primeAnnuelle
     @Test
-    public void testPrimeAnnuelleManagerDateEmbaucheNow(){
+    void testPrimeAnnuelleManagerDateEmbaucheNow(){
         //Given
         Employe employe = new Employe("Doe", "John", "T12345",
                 LocalDate.now(), 1500d, 0, 1.0);
@@ -80,7 +80,7 @@ public class EmployeTest {
 
 
     @Test
-    public void testPrimeAnnuelleManagerAnneeEmbaucheMinusOne(){
+    void testPrimeAnnuelleManagerAnneeEmbaucheMinusOne(){
         // Given
         Employe employe = new Employe("Doe", "John", "T12345",
                 LocalDate.now(), 1500d, 0, 1.0);
@@ -110,7 +110,7 @@ public class EmployeTest {
         Assertions.assertThat(prime).isEqualTo(primeAttendue);
     }
 
-    // un sénario TEST PARAMETRé GET PRIME ANNUELLE
+    // un sénario test paramétré GET PRIME ANNUELLE
     @ParameterizedTest(name = "Perf {0}, matricule {1}, txActivite {2}, anciennete {3} => prime {4}")
     @CsvSource({
             "1, 'T12345', 1.0, 0, 1000.0",
@@ -121,9 +121,7 @@ public class EmployeTest {
             "1, 'M12345', 1.0, 0, 1700.0",
             "1, 'M12345', 1.0, 3, 2000.0"
     })
-
-
-    public void testGetPrimeAnnuelle(Integer performance, String matricule, Double tauxActivite, Long nbAnneeAnciennete, Double primeAttendue){
+    void testGetPrimeAnnuelle(Integer performance, String matricule, Double tauxActivite, Long nbAnneeAnciennete, Double primeAttendue){
         // Given
 
         Employe employe = new Employe("Doe", "John", matricule,
@@ -139,7 +137,7 @@ public class EmployeTest {
 
     // Test de CAS LIMITE en test simple
     @Test
-    public void testGetPrimeAnnuelleMatriculeNull(){
+    void testGetPrimeAnnuelleMatriculeNull(){
         // Given
         Employe employe = new Employe("Doe", "John", null,
                 LocalDate.now(), 1500d, 1, 1.0);
@@ -151,6 +149,62 @@ public class EmployeTest {
         Assertions.assertThat(prime).isEqualTo(1000);
     }
 
-    // Test mutation testing
+    /**
+    * Test augmenter le Salaire
+    */
+    // pourcentage à 20%
+    @Test
+    void testAugmenterSalairePourcentage20(){
+        // Given
+        Employe employe = new Employe("Doe", "John", null, LocalDate.now(), 1500d, 1, 1.0);
+        Double pourcentage = 0.2;
+
+        // When
+        Double salaire = employe.augmenterSalaire(pourcentage);
+
+        // Then
+        Assertions.assertThat(salaire).isEqualTo(1800);
+    }
+    // Si le pourcentage = 0
+    @Test
+    void testAugmentationSalairePourcentage0(){
+        // Given
+        Employe employe = new Employe("Doe", "John", null, LocalDate.now(), 1500d, 1, 1.0);
+        Double pourcentage = 0.0;
+
+        // When
+        Double salaire = employe.augmenterSalaire(pourcentage);
+
+        // Then
+        Assertions.assertThat(salaire).isEqualTo(1500);
+    }
+    // CAS LIMITES
+    // Si le pourcentage = null
+    // Si le pourcentage is NaN
+
+
+    // un sénario Test Paramétrés Get Nombres Rtt
+    // l'année de référence est a passer en paramètre, ainsi que
+    @ParameterizedTest(name = "dateReference {0}, tempspartiel {1} =>  nbRtt {2}")
+    @CsvSource({
+            "2019-01-01, 1.0 , 8",
+            "2021-01-01, 0.5, 5",
+            "2022-01-01, 1.0, 10",
+            "2032-01-01, 1.0, 11"
+    })
+
+    void testGetNbRtt(LocalDate dateReference, Double tempsPartiel, Integer nbRtt ){
+        // Given
+        Employe employe = new Employe("Doe", "John", "C00001", LocalDate.now(), 1500d, 1, tempsPartiel);
+
+        // When
+        Integer nombreRtt = employe.getNbRtt(dateReference);
+
+        // Then
+        Assertions.assertThat(nombreRtt).isEqualTo(nbRtt);
+
+    }
+
+
 
 }
