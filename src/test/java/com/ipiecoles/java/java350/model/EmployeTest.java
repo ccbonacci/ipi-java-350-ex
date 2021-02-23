@@ -184,22 +184,23 @@ public class EmployeTest {
 
 
     // un sénario Test Paramétrés Get Nombres Rtt
-    // l'année de référence, si elle est bissextile et a débuter
-
-    @ParameterizedTest(name = "dateReference {0} est bissextile : {1}, premierJourAnnée {2}, nbJoursFeries {3} pendant un week-end : {4}, nbRtt {5}")
+    // l'année de référence est a passer en paramètre, ainsi que
+    @ParameterizedTest(name = "dateReference {0}, tempspartiel {1} =>  nbRtt {2}")
     @CsvSource({
-            "2019-01-01, false, 'tuesday', 10, false, 8",
-            "2021-12-03, false, 'wednesday', 7, false, 10",
-            "2022-04-09, false, 'saturday', 7, false, 10",
-            "2032-01-31, true, 'thursday', 7, false, 11"
+            "2019-01-01, 1.0 , 8",
+            "2021-01-01, 0.5, 5",
+            "2022-01-01, 1.0, 10",
+            "2032-01-01, 1.0, 11"
     })
-    public void testGetNbRtt(LocalDate dateReference, Boolean result, String premierJourAnnée, int nbJoursFeries, Boolean result2, int nbRtt ){
+
+    public void testGetNbRtt(LocalDate dateReference, Double tempsPartiel, Integer nbRtt ){
         // Given
-        Employe employe = new Employe("Doe", "John", null, LocalDate.now(), 1500d, 1, 1.0);
+        Employe employe = new Employe("Doe", "John", null, LocalDate.now(), 1500d, 1, tempsPartiel);
+
         // When
         int nombreRtt = employe.getNbRtt(dateReference);
 
-        // Then Assertions.assertThat(prime).isEqualTo(primeAttendue);
+        // Then
         Assertions.assertThat(nombreRtt).isEqualTo(nbRtt);
 
     }

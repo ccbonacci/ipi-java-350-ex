@@ -83,8 +83,7 @@ public class Employe {
         int nbJoursAnnee = dateReference.isLeapYear() ? 366 : 365;
         int nbSamediDimanche = 104;
 
-        // Détermine le nombre de jour à ajouter aux samedis et dimanches de l'année, en fonction du premier jour de l'année
-        // et si l'année est bissextile ou non
+        // Détermine le nombre de jour à ajouter aux samedis et dimanches de l'année, en fonction du premier jour de l'année et si l'année est bissextile ou non
         switch (LocalDate.of(dateReference.getYear(), 1, 1).getDayOfWeek()) {
             case THURSDAY:
                 if (dateReference.isLeapYear()){
