@@ -83,10 +83,9 @@ public class Employe {
         int nbJoursAnnee = dateReference.isLeapYear() ? 366 : 365;
         int nbSamediDimanche = 104;
 
-        // Déterminer le nombre de samedi et de dimanche de l'année, en fonction du premier jour de l'année
-        // et de l'année bissextile ou non
+        // Détermine le nombre de jour à ajouter aux samedis et dimanches de l'année, en fonction du premier jour de l'année
+        // et si l'année est bissextile ou non
         switch (LocalDate.of(dateReference.getYear(), 1, 1).getDayOfWeek()) {
-
             case THURSDAY:
                 if (dateReference.isLeapYear()){
                     nbSamediDimanche = nbSamediDimanche + 1;
@@ -105,7 +104,6 @@ public class Employe {
                 nbSamediDimanche = nbSamediDimanche + 1;
                 break;
         }
-
         int nbJoursFeriesSemaine = (int) Entreprise.joursFeries(dateReference).stream().filter(localDate ->
                 localDate.getDayOfWeek().getValue() <= DayOfWeek.FRIDAY.getValue()).count();
 
@@ -137,7 +135,7 @@ public class Employe {
 
         Double prime;
         //Prime du manager (matricule commençant par M) : Prime annuelle de base multipliée par l'indice prime manager
-        //plus la prime d'anciennté.
+        //+ la prime d'anciennté.
         if(matricule != null && matricule.startsWith("M")) {
             prime = Entreprise.primeAnnuelleBase() * Entreprise.INDICE_PRIME_MANAGER + primeAnciennete;
         }
@@ -162,12 +160,9 @@ public class Employe {
      * @save salaire augmenté
      *  (entrée  un pourcentage,le salaire d'un salarié, puis calcul du salaire et sauvegarde du salaire augmenté
      */
-    public Double augmenterSalaire(double pourcentage){
+    public Double augmenterSalaire(double pourcentage) {
         return this.salaire = this.getSalaire() * (pourcentage + 1);
-
-
     }
-
 
 
     public Long getId() {

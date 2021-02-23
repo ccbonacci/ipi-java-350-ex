@@ -110,7 +110,7 @@ public class EmployeTest {
         Assertions.assertThat(prime).isEqualTo(primeAttendue);
     }
 
-    // un sénario TEST PARAMETRé GET PRIME ANNUELLE
+    // un sénario test paramétré GET PRIME ANNUELLE
     @ParameterizedTest(name = "Perf {0}, matricule {1}, txActivite {2}, anciennete {3} => prime {4}")
     @CsvSource({
             "1, 'T12345', 1.0, 0, 1000.0",
@@ -121,8 +121,6 @@ public class EmployeTest {
             "1, 'M12345', 1.0, 0, 1700.0",
             "1, 'M12345', 1.0, 3, 2000.0"
     })
-
-
     public void testGetPrimeAnnuelle(Integer performance, String matricule, Double tauxActivite, Long nbAnneeAnciennete, Double primeAttendue){
         // Given
 
@@ -151,10 +149,12 @@ public class EmployeTest {
         Assertions.assertThat(prime).isEqualTo(1000);
     }
 
-    // Test augmenter le Salaire
-    // pourcentage
+    /**
+    * Test augmenter le Salaire
+    */
+    // pourcentage à 20%
     @Test
-    public void testAugmenterSalairePourcentage(){
+    public void testAugmenterSalairePourcentage20(){
         // Given
         Employe employe = new Employe("Doe", "John", null, LocalDate.now(), 1500d, 1, 1.0);
         Double pourcentage = 0.2;
@@ -165,7 +165,47 @@ public class EmployeTest {
         // Then
         Assertions.assertThat(salaire).isEqualTo(1800);
     }
-    // pourcentage
+    // Si le pourcentage = 0
+    @Test
+    public void testAugmentationSalairePourcentage0(){
+        // Given
+        Employe employe = new Employe("Doe", "John", null, LocalDate.now(), 1500d, 1, 1.0);
+        Double pourcentage = 0.0;
+
+        // When
+        Double salaire = employe.augmenterSalaire(pourcentage);
+
+        // Then
+        Assertions.assertThat(salaire).isEqualTo(1500);
+    }
+    // CAS LIMITES
+    // Si le pourcentage = null
+    // Si le pourcentage is NaN
+
+
+    // un sénario Test Paramétrés Get Nombres Rtt
+    // l'année de référence, si elle est bissextile et a débuter
+
+    @ParameterizedTest(name = "dateReference {0} est bissextile : {1}, premierJourAnnée {2}, nbJoursFeries {3} pendant un week-end : {4}, nbRtt {5}")
+    @CsvSource({
+            "2019-01-01, false, 'tuesday', 10, false, 8",
+            "2021-12-03, false, 'wednesday', 7, false, 10",
+            "2022-04-09, false, 'saturday', 7, false, 10",
+            "2032-01-31, true, 'thursday', 7, false, 11"
+    })
+    public void testGetNbRtt(LocalDate dateReference, Boolean result, String premierJourAnnée, int nbJoursFeries, Boolean result2, int nbRtt ){
+        // Given
+        Employe employe = new Employe("Doe", "John", null, LocalDate.now(), 1500d, 1, 1.0);
+        // When
+        int nombreRtt = employe.getNbRtt(dateReference);
+
+        // Then Assertions.assertThat(prime).isEqualTo(primeAttendue);
+        Assertions.assertThat(nombreRtt).isEqualTo(nbRtt);
+
+    }
+
+
+
 
 
 
