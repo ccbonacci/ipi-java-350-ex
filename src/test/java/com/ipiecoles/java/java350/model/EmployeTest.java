@@ -13,7 +13,7 @@ public class EmployeTest {
 
     // Méthode Fabrice
     @Test
-    public void testGetAnneeAncienneteDateEmbauche(){
+    void testGetAnneeAncienneteDateEmbauche(){
 
         // Given : initialisation des données d'entrée
         Employe employe = new Employe("Doe", "John", "T12345",
@@ -28,7 +28,7 @@ public class EmployeTest {
 
 
     @Test
-    public void testGetNbAnneeAncienneteDateEmbaucheSupNow(){
+    void testGetNbAnneeAncienneteDateEmbaucheSupNow(){
 
         // Given : initialisation des données d'entrée
         Employe employe = new Employe("Doe", "John", "T12345",
@@ -43,7 +43,7 @@ public class EmployeTest {
 
 
     @Test
-    public void testGetNbAnneeAncienneteDateEmbaucheNull() {
+    void testGetNbAnneeAncienneteDateEmbaucheNull() {
         //Given : initialisation des données d'entrée
         Employe employe = new Employe();
         employe.setDateEmbauche(null);
@@ -55,7 +55,7 @@ public class EmployeTest {
 
 
     @Test
-    public void testGetNbAnneeAncienneteDateEmbaucheNow(){
+    void testGetNbAnneeAncienneteDateEmbaucheNow(){
         //Given
         Employe employe = new Employe("Doe", "John", "T12345",
                 LocalDate.now(), 1500d, 1, 1.0);
@@ -68,7 +68,7 @@ public class EmployeTest {
 
     // Tests primeAnnuelle
     @Test
-    public void testPrimeAnnuelleManagerDateEmbaucheNow(){
+    void testPrimeAnnuelleManagerDateEmbaucheNow(){
         //Given
         Employe employe = new Employe("Doe", "John", "T12345",
                 LocalDate.now(), 1500d, 0, 1.0);
@@ -80,7 +80,7 @@ public class EmployeTest {
 
 
     @Test
-    public void testPrimeAnnuelleManagerAnneeEmbaucheMinusOne(){
+    void testPrimeAnnuelleManagerAnneeEmbaucheMinusOne(){
         // Given
         Employe employe = new Employe("Doe", "John", "T12345",
                 LocalDate.now(), 1500d, 0, 1.0);
@@ -121,7 +121,7 @@ public class EmployeTest {
             "1, 'M12345', 1.0, 0, 1700.0",
             "1, 'M12345', 1.0, 3, 2000.0"
     })
-    public void testGetPrimeAnnuelle(Integer performance, String matricule, Double tauxActivite, Long nbAnneeAnciennete, Double primeAttendue){
+    void testGetPrimeAnnuelle(Integer performance, String matricule, Double tauxActivite, Long nbAnneeAnciennete, Double primeAttendue){
         // Given
 
         Employe employe = new Employe("Doe", "John", matricule,
@@ -137,7 +137,7 @@ public class EmployeTest {
 
     // Test de CAS LIMITE en test simple
     @Test
-    public void testGetPrimeAnnuelleMatriculeNull(){
+    void testGetPrimeAnnuelleMatriculeNull(){
         // Given
         Employe employe = new Employe("Doe", "John", null,
                 LocalDate.now(), 1500d, 1, 1.0);
@@ -154,7 +154,7 @@ public class EmployeTest {
     */
     // pourcentage à 20%
     @Test
-    public void testAugmenterSalairePourcentage20(){
+    void testAugmenterSalairePourcentage20(){
         // Given
         Employe employe = new Employe("Doe", "John", null, LocalDate.now(), 1500d, 1, 1.0);
         Double pourcentage = 0.2;
@@ -167,7 +167,7 @@ public class EmployeTest {
     }
     // Si le pourcentage = 0
     @Test
-    public void testAugmentationSalairePourcentage0(){
+    void testAugmentationSalairePourcentage0(){
         // Given
         Employe employe = new Employe("Doe", "John", null, LocalDate.now(), 1500d, 1, 1.0);
         Double pourcentage = 0.0;
@@ -193,21 +193,17 @@ public class EmployeTest {
             "2032-01-01, 1.0, 11"
     })
 
-    public void testGetNbRtt(LocalDate dateReference, Double tempsPartiel, Integer nbRtt ){
+    void testGetNbRtt(LocalDate dateReference, Double tempsPartiel, Integer nbRtt ){
         // Given
-        Employe employe = new Employe("Doe", "John", null, LocalDate.now(), 1500d, 1, tempsPartiel);
+        Employe employe = new Employe("Doe", "John", "C00001", LocalDate.now(), 1500d, 1, tempsPartiel);
 
         // When
-        int nombreRtt = employe.getNbRtt(dateReference);
+        Integer nombreRtt = employe.getNbRtt(dateReference);
 
         // Then
         Assertions.assertThat(nombreRtt).isEqualTo(nbRtt);
 
     }
-
-
-
-
 
 
 
